@@ -33,7 +33,7 @@ usuario.Retorna_Users()
 
 # Fontes
 
-> 
+> http://apidocs.axway.com/swagger-ui-st/admin-20/
 
 # Detalhes de Processo
 
