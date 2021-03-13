@@ -156,21 +156,24 @@ self.usuarios_mft = []
 # Retorno dos Dados
 
 ```python
-1. data = self.url.json()
-2.
-3.  for admin in data['administrators']:
-4.    self.usuarios_mft.append(admin['loginName'])
-5.  self.logger.info('Usuários MFT: {}'.format(self.usuarios_mft))
-6.
-7.  print(self.usuarios_mft)
+1. def Retorna_user(self):
+2. 	 data = self.url.json()
+3.
+4.   for admin in data['administrators']:
+5.     self.usuarios_mft.append(admin['loginName'])
+6.   self.logger.info('Usuários MFT: {}'.format(self.usuarios_mft))
+7.
+8.   print(self.usuarios_mft)
 ```
 
-> Linha 1: Cria uma variável que recebe os dados obtidos em formato JSON.
+> Linha 1: Cria a função __Retorna_Users__.
 >
-> Linha 3: Cria um laço que passa pelo objeto __administrators__
+> Linha 2: Cria uma variável que recebe os dados obtidos em formato JSON.
 >
-> Linha 4: Insere na lista o objeto __LoginName__ dos usuários.
+> Linha 4: Cria um laço que passa pelo objeto __administrators.__
 >
-> Linha 5: Faz uma chamada de LOG com tipo INFO.
+> Linha 5: Insere na lista o objeto __LoginName__ dos usuários.
 >
-> Linha 7: Retorna a lista de __usuários MFT__ 
+> Linha 6: Faz uma chamada de LOG com tipo INFO.
+>
+> Linha 8: Retorna a lista de __usuários MFT__ .
