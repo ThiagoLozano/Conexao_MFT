@@ -4,8 +4,11 @@
 
 # Tecnologias Utilizadas
 
-* **_VScode_;**
+* **_VScode_**;
+
 * **_Python3;_** 
+
+  
 
 # Bibliotecas e Configurações
 
@@ -86,7 +89,6 @@ usuario.Retorna_Users()
 >
 
 ``` python
-# Carrega o config.json
 1. try:
 2.   with open('./config.json') as f:
 3.    self.config = json.load(f)
@@ -112,29 +114,29 @@ usuario.Retorna_Users()
 
 
 
-### Configurações LDAP
+### Configurações MFT
 
 ```python
-1 try:
-2    self.server = Server(self.config['AD']['Server'], port=self.config['AD']['Port'], use_ssl=True)
-3    self.user = self.config['AD']['User']
-4    self.password = self.config['AD']['Password']
-5    self.conexao = Connection(self.server, self.user, self.password, auto_bind=True)
-6    self.logger.info('LDAP: Administradores LDAP carregados com sucesso')
-7 except Exception as erro:
-8    self.logger.error('LDAP: Erro ao conectar com LDAP - ERROR: {}'.format(str(erro)))
-9    exit(1)
+1  try:
+2.    self.host = self.config['MFT']['Host']
+3.    self.user = self.config['MFT']['User']
+4.    self.password = self.config['MFT']['Password']
+5.    self.url = requests.get(self.host + '/administrators', auth=(self.user, self.password), verify=False)
+6.    self.logger.info('MFT conectado com sucesso')
+7. except Exception as erro:
+8.    self.logger.error('MFT: Problemas ao realizar requisições no MFT - ERROR: {}'.format(erro))
+9.    exit(1)
 ```
 
 > Linha 1:  Chama a função de Try.
 >
-> Linha 2: Recebe a configuração do server -> Server (<server_do_config.json>, port= <porta_no_config.json>, user_ssl =True)
+> Linha 2: Pega o host de conexão no config.json
 >
 > Linha 3: Pega o nome do usuário no config.json
 >
 > Linha 4: Pega a senha do usuário no config.json
 >
-> Linha 5: Faz a conexão -> Connection (<server>, <user>, <password>, auto_bind =True)
+> Linha 5: Faz a operação __GET__ na URL -> (<host>, /administrators, auth=(<user>, <password>), verify=False)
 >
 > Linha 6: Faz uma chamada de LOG com tipo INFO.
 >
@@ -144,22 +146,31 @@ usuario.Retorna_Users()
 >
 > Linha 9: Fecha  o programa.
 
+# Listas
+
+```python
+# Cria uma lista onde será armazenado os usuários.
+self.usuarios_mft = []
+```
+
 # Retorno dos Dados
 
 ```python
-1. def Retorna_Users(self):
-2.   for grupo in self.config["Grupos_LDAP"]:
-3.   	self.conexao.search(self.config["AD"]["Search_Groups"].format(grupo), "(sAMAccountName=*)")
-4.   	lista_users = self.conexao.entries
-5.   	print(lista_users)
+1. data = self.url.json()
+2.
+3.  for admin in data['administrators']:
+4.    self.usuarios_mft.append(admin['loginName'])
+5.   self.logger.info('Usuários MFT: {}'.format(self.usuarios_mft))
+6.
+7.  print(self.usuarios_mft)
 ```
 
-> Linha 1: Cria a função __Retorna_Users__
+> Linha 1: Cria uma variável que recebe os dados obtidos em formato JSON.
 >
-> Linha 2: Cria uma laço que passa pelos nomes de cada grupo no config.json
+> Linha 3: Cria um laço que passa pelo objeto __administrators__
 >
-> Linha 3: Faz uma busca pelos grupos com o atributo de __sAMAccountName__
+> Linha 4: Insere na lista o objeto __LoginName__ dos usuários.
 >
-> Linha 4: Recebe os dados em formato de lista.
+> Linha 5: Faz uma chamada de LOG com tipo INFO.
 >
-> Linha 5: Retorna todos os usuário com seus grupos correspondentes.
+> Linha 7: Retorna a lista de __usuários MFT__ 
