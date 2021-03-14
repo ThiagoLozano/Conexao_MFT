@@ -161,7 +161,7 @@ self.usuarios_mft = []
 3.	  
 4.    for admin in data['administrators']:
 5.       self.usuarios_mft.append(admin['loginName'])
-6.   self.logger.info('Usuários MFT: {}'.format(self.usuarios_mft))
+6.    self.logger.info('Usuários MFT: {}'.format(self.usuarios_mft))
 7.
 8.   print(self.usuarios_mft)
 ```
