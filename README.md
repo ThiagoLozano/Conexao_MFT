@@ -1,6 +1,6 @@
-# PROJETO PYTHON: Conexão LDAP
+# PROJETO PYTHON: Conexão MFT
 
-> Modelo de Script de conexão com o sistema LDAP, que retorna os usuários encontrados de cada grupo.
+> Modelo de Script de conexão com o sistema MFT, que retorna os usuários encontrados de cada grupo.
 
 # Tecnologias Utilizadas
 
